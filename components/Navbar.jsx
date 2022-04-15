@@ -1,10 +1,12 @@
 import React from 'react'
 import { FiPhoneCall } from 'react-icons/fi'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
-import { NavLink } from 'react-router-dom'
+// import { NavLink } from 'react-router-dom'
 import Link from 'next/link'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
+  const quantity = useSelector(state=>state.cart.quantity)
   return (
     <div className="bg-red-500 w-full h-16 sticky top-0 z-50">
       <div className="text-white h-full flex flex-row gap-2 justify-evenly items-center">
@@ -22,7 +24,8 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex-3 flex flex-row  items-center gap-3">
-          <Link href="/">
+          {/* passHref forces href into children element */}
+          <Link href="/" passHref>
             Homepage
           </Link>
           <div>
@@ -44,9 +47,12 @@ const Navbar = () => {
             Contact
           </div>
         </div> 
-        <div className="flex flex-1 flex-row justify-center">
-          <AiOutlineShoppingCart size={30}/>
-        </div>
+        <Link href="/cart" passHref>
+          <div className="flex flex-1 flex-row justify-center gap-2">
+            <AiOutlineShoppingCart size={30}/>
+            <div className="relative top-1">{quantity}</div>
+          </div>
+        </Link>
       </div>
     </div>
   )

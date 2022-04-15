@@ -1,20 +1,44 @@
 import Image from 'next/image'
-import React, { useState} from 'react'
+import React, { useState, useEffect, createRef } from 'react'
+import { useDispatch } from 'react-redux'
+import { addProduct } from '../../redux/cartSlice'
 
 const Product = ({pizza}) => {
+  const [size, setSize] = useState(0)
+  const [quantity, setQuantity] = useState(1)
+  const [price, setPrice] = useState(0)
+  const [extraOptions, setExtraOptions] = useState([])
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [elRefs, setElRefs] = useState([])
+
+
+  useEffect(()=>{
+      // Array.fill() with no arguments means filling the array with undefineds
+      const refs= Array(pizza?.extraOptions?.length).fill().map((_,i)=>elRefs[i]||createRef())
+      setElRefs(refs)
+  },[pizza?.extraOptions])
+
+  useEffect(()=>{
+    setTotalPrice((Number(price)+pizza.prices[size])*quantity)
+  },[price,totalPrice,quantity])
+
+  const dispatch = useDispatch()
 
   const handleExtraOption = (e) => {
     setPrice(e.target.checked?price+e.target.value:price-e.target.value)
     setExtraOptions([e.target.name,...extraOptions])
   }
 
-  const handleAddToCart=()=>{
-    setTotalPrice((Number(price)+pizza.prices[size])*quantity)
-    alert("Added to cart")
+  const handleAddToCart= async ()=>{
+    dispatch(addProduct({...pizza,extraOptions,totalPrice,quantity}))
+    alert("Added to cart"+totalPrice)
     setQuantity(1)
     setSize(0)
     setPrice(0)
-  }
+    elRefs.map(elRef=>{
+      elRef.current.checked=false;
+    })
+    }
 
   // const pizza = {
   //   id:1,
@@ -27,17 +51,11 @@ const Product = ({pizza}) => {
   //   image:"/img/pizza.png"
   // }
 
-  const [size, setSize] = useState(0)
-  const [quantity, setQuantity] = useState(1)
-  const [price, setPrice] = useState(0)
-  const [extraOptions, setExtraOptions] = useState([])
-  const [totalPrice, setTotalPrice] = useState(0)
-
   return (
     <div className="m-10 flex flex-row gap-12 items-center justify-evenly">
       <div className="relative h-96 w-96">
         {/* contain means it rescales to fit inside parent element, cover means it preserves its ratio while being in parent element */}
-        <Image layout="fill" objectFit="cover" size src={pizza.image} alt={pizza.name}/>
+        <Image layout="fill" objectFit="cover" src={pizza.image} alt={pizza.name}/>
       </div>
       <div className="flex flex-col gap-8 items-center">
         <div className="uppercase font-bold text-3xl">
@@ -72,7 +90,7 @@ const Product = ({pizza}) => {
         <div className="flex flex-row gap-8 items-center m-5">
           {pizza.extraOptions.map((extraOption,i)=>
             <div key={i} className="flex flex-row gap-2 justify-center items-center">
-              <input type="checkbox" id={extraOption.text} name={extraOption.text} value={extraOption.price} onClick={(e)=>handleExtraOption(e)}/>
+              <input ref={elRefs[i]} type="checkbox" id={extraOption.text} name={extraOption.text} value={extraOption.price} onClick={(e)=>handleExtraOption(e)}/>
               <label htmlFor={extraOption.text}>{extraOption.text} (${extraOption.price})</label>
             </div>
           )}

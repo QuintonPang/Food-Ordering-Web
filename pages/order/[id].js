@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import { MdDone, MdError } from 'react-icons/md'
 
-const Order = () => {
+const Order = ({order}) => {
 
     const [status, setStatus] = useState(0)
+    useEffect(()=>{
+        setStatus(order.status)
+    },[order])
     return (
         <div className="flex flex-row justify-evenly items-center">
             <table className="table-auto text-center my-20">
@@ -19,16 +22,16 @@ const Order = () => {
                 <tbody>
                     <tr>
                         <td className="p-16">
-                            123456789
+                            {order._id}
                         </td>
                         <td className="p-16">
-                            Quinton Pang
+                            {order.customer}
                         </td>
                         <td className="p-16">
-                            65, Taman Sentosa
+                            {order.address}
                         </td>
                         <td className="p-16">
-                            $20.00
+                            ${order.total}
                         </td>
                     </tr>
                     <tr>
@@ -75,5 +78,14 @@ const Order = () => {
         </div>
         )
 }
+
+export const getServerSideProps = async({params}) =>{
+    const pizza = await (await fetch(`http:localhost:3000/api/orders/${params.id}`)).json()
+    return{
+      props:{
+        order
+      }
+    }
+  }
 
 export default Order

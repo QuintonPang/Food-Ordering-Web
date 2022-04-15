@@ -1,5 +1,5 @@
 import dbConnect from '../../../util/mongo'
-import Product from '../../../models/Product'
+import Order from '../../../models/Order'
 
 const handler = async (req,res) =>{
     const { method, query:{id} } = req;
@@ -9,8 +9,8 @@ const handler = async (req,res) =>{
     switch(method){
         case "GET":
             try{
-                const products = await Product.findById(id)
-                res.status(200).json(products)
+                const orders = await Order.findById(id)
+                res.status(200).json(orders)
             }catch(err){
                 res.status(500).json(err)
                 console.log(err)
@@ -18,16 +18,16 @@ const handler = async (req,res) =>{
             break;
         case "PUT":
             try{
-                const product = await Product.create(req.body)
-                res.status(200).json(product)
+                const order = await Order.create(req.body)
+                res.status(200).json(order)
             }catch(err){
                 res.status(500).json(err)
             }
             break;
         case "DELETE":
             try{
-                const product = await Product.FindByIdAndDelete(id)
-                res.status(200).json(`Product with id ${id} has been deleted successfully!`)
+                const order = await Order.FindByIdAndDelete(id)
+                res.status(200).json(`Order with id ${id} has been deleted successfully!`)
             }catch(err){
                 res.status(500).json(err)
             }
