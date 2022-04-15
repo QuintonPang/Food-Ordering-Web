@@ -1,34 +1,34 @@
 import React from 'react'
 import PizzaCard from './PizzaCard'
 
-const PizzaList = () => {
+const PizzaList = ({pizzaList}) => {
 
-    const pizzaList = [
-        {
-            name:"pepperoni",
-            price:"$500",
-        },
-        {
-            name:"beef",
-            price:"$600",
-        },
-        {
-            name:"pepperoni",
-            price:"$500",
-        },
-        {
-            name:"beef",
-            price:"$600",
-        },
-        {
-            name:"pepperoni",
-            price:"$500",
-        },
-        {
-            name:"beef",
-            price:"$600",
-        },
-    ]
+    // const pizzaList = [
+    //     {
+    //         name:"pepperoni",
+    //         price:"$500",
+    //     },
+    //     {
+    //         name:"beef",
+    //         price:"$600",
+    //     },
+    //     {
+    //         name:"pepperoni",
+    //         price:"$500",
+    //     },
+    //     {
+    //         name:"beef",
+    //         price:"$600",
+    //     },
+    //     {
+    //         name:"pepperoni",
+    //         price:"$500",
+    //     },
+    //     {
+    //         name:"beef",
+    //         price:"$600",
+    //     },
+    // ]
 
   return (
     <div className="flex flex-col items-center gap-2 mt-4">

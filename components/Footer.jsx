@@ -36,22 +36,22 @@ const Footer = () => {
             WORKING HOURS
         </div>
         <div className="flex flex-col justify-start">         
-            <p className="text-white text-sm my-2"> 
+            <div className="text-white text-sm my-2"> 
               <p>
                 MONDAY TO FRIDAY:
               </p>
               <p>
                 8:00 - 20:00
               </p>         
-            </p>
-            <p className="text-white text-sm my-2"> 
+            </div>
+            <div className="text-white text-sm my-2"> 
               <p>
                 SATURDAY & SUNDAY: 
               </p>
               <p>
                 6:00 - 22:00         
               </p>
-            </p>
+            </div>
         </div>
       </div>
     </div>
