@@ -136,9 +136,21 @@ const index = ({pizzas,orders}) => {
   )
 }
 
-export const getServerSideProps = async() =>{
-  const pizzas = await (await fetch(`http:localhost:3000/api/products`)).json()
+export const getServerSideProps = async(context) =>{
+  
+  const myCookie = context.req?.cookies.token || ''
+
+  if(myCookie!==process.env.TOKEN)
+    return{
+      redirect:{
+        destination:"/admin/login",
+        permanent:false, // in same tab
+      }
+  }
+  
   const orders = await (await fetch(`http:localhost:3000/api/orders`)).json()
+  const pizzas = await (await fetch(`http:localhost:3000/api/products`)).json()
+  
   return{
     props:{
       pizzas,
