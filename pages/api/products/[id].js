@@ -18,7 +18,9 @@ const handler = async (req,res) =>{
             break;
         case "PUT":
             try{
-                const product = await Product.create(req.body)
+                const product = await Product.findByIdAndUpdate(id,req.body,{
+                    new:true
+                })
                 res.status(200).json(product)
             }catch(err){
                 res.status(500).json(err)
@@ -26,9 +28,10 @@ const handler = async (req,res) =>{
             break;
         case "DELETE":
             try{
-                const product = await Product.FindByIdAndDelete(id)
+                const product = await Product.findByIdAndDelete(id)
                 res.status(200).json(`Product with id ${id} has been deleted successfully!`)
             }catch(err){
+                console.log(err)
                 res.status(500).json(err)
             }
             break;

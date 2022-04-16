@@ -34,5 +34,5 @@ const ProductSchema = new mongoose.Schema({
 },{timestamps:true}) // returns timestamp of creating and updating
 
 // if we have a product model, we won't create it again
-// third parameter of mongoose.models is name of collection, it defaults to lowercase form of model name
-export default mongoose.models.Product||mongoose.model("Product",ProductSchema,"Product")
+// third parameter of mongoose.models is name of collection, it defaults to lowercase form of model name with 's' at the end
+export default mongoose.models.Product||mongoose.model("Product",ProductSchema)

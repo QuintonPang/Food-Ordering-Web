@@ -8,6 +8,8 @@ import {
 } from "@paypal/react-paypal-js";
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { useRouter } from 'next/router'
+import OrderDetails from '../components/OrderDetails';
+import { reset } from '../redux/cartSlice'
 
 const Cart = () => {
     const dispatch = useDispatch()
@@ -25,15 +27,16 @@ const Cart = () => {
     
     const createOrder = async (data) =>{
         try{
-            fetch('http://localhost:3001/createReview',{
+            fetch('http://localhost:3000/api/orders',{
                 method:'POST',
                 headers:{
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
-            .then((res)=>{
-                router.push(`/order/${res._id}`)
+            .then(res=>res.json())
+            .then((data)=>{
+                router.push(`/order/${data._id}`)
                 dispatch(reset())
             })
         }catch(err){
@@ -47,7 +50,7 @@ const Cart = () => {
         }))
     },[cart])
   return (
-    <div className="flex flex-row justify-evenly items-center h-full w-full">
+    <div className="flex flex-row justify-evenly items-center h-screen w-screen">
         <table className="table-auto text-center my-20">
             <thead>
                 <tr>
@@ -85,7 +88,7 @@ const Cart = () => {
             ))}
             
         </table>
-        <div className="h-full p-8 flex flex-col gap-8 items-start justify-center bg-gray-700 rounded-md">
+        <div className="m-8 p-8 flex flex-col gap-8 items-start justify-center bg-gray-700 rounded-md">
             <h2 className="uppercase text-white">
                 CART TOTAL
             </h2>
@@ -103,7 +106,7 @@ const Cart = () => {
             {openPaypal?(
             <div className="flex flex-col items-start gap-3">
                 {/* <AiFillCloseCircle onClick={()=>setOpenPaypal(false)}size={20}/> */}
-                <button onClick={()=>setOpenCash(true)}className="p-4 bg-white font-bold text-green self-stretch uppercase">
+                <button onClick={()=>setOpenCash(true)}className="p-4 bg-green-500 font-bold text-white self-stretch uppercase">
                     Pay By Cash
                 </button>
                 <PayPalScriptProvider
@@ -128,9 +131,7 @@ const Cart = () => {
             )}
         </div>
         {openCash&&( 
-            <div className="absolute flex flex-col gap-4 justify-center opacity-25 h-screen w-screen bg-grey-500">
-                
-            </div>      
+            <OrderDetails subtotal={cart.subtotal} createOrder={createOrder}/>    
             )}
       </div>
       )

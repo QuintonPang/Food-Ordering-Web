@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { MdDone, MdError } from 'react-icons/md'
 
@@ -35,17 +35,23 @@ const Order = ({order}) => {
                         </td>
                     </tr>
                     <tr>
-                        <td className="flex flex-col items-center gap-2">
-                            Payment
-                            {status>=0?<MdDone style={{color:"green"}}/>:<MdError style={{color:"red"}}/>}
+                    <td className="">
+                            <div className="flex flex-col items-center gap-2">
+                                Payment
+                                {status>=0?<MdDone style={{color:"green"}}/>:<MdError style={{color:"red"}}/>}
+                            </div>
                         </td>
-                        <td className="flex flex-col items-center gap-2">
-                            Preparing
-                            {status>=1?<MdDone style={{color:"green"}}/>:<MdError style={{color:"red"}}/>}
+                        <td className="">
+                            <div className="flex flex-col items-center gap-2">
+                                Preparing
+                                {status>=1?<MdDone style={{color:"green"}}/>:<MdError style={{color:"red"}}/>}
+                            </div>
                         </td>
-                        <td className="flex flex-col items-center gap-2">
-                            On the way
-                            {status>=2?<MdDone style={{color:"green"}}/>:<MdError style={{color:"red"}}/>}
+                        <td className="">
+                            <div className="flex flex-col items-center gap-2">
+                                On the way
+                                {status>=2?<MdDone style={{color:"green"}}/>:<MdError style={{color:"red"}}/>}
+                            </div>
                         </td>
                         <td className="">
                             <div className="flex flex-col items-center gap-2">
@@ -80,7 +86,7 @@ const Order = ({order}) => {
 }
 
 export const getServerSideProps = async({params}) =>{
-    const pizza = await (await fetch(`http:localhost:3000/api/orders/${params.id}`)).json()
+    const order = await (await fetch(`http:localhost:3000/api/orders/${params.id}`)).json()
     return{
       props:{
         order

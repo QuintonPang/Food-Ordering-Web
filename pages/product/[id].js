@@ -31,7 +31,7 @@ const Product = ({pizza}) => {
 
   const handleAddToCart= async ()=>{
     dispatch(addProduct({...pizza,extraOptions,totalPrice,quantity}))
-    alert("Added to cart"+totalPrice)
+    alert("Added to cart")
     setQuantity(1)
     setSize(0)
     setPrice(0)

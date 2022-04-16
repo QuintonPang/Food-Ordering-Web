@@ -18,7 +18,10 @@ const handler = async (req,res) =>{
             break;
         case "PUT":
             try{
-                const order = await Order.create(req.body)
+                const order = await Order.findByIdAndUpdate(id,req.body,{
+                    new:true, // return newest version
+                })
+                console.log(order)
                 res.status(200).json(order)
             }catch(err){
                 res.status(500).json(err)
@@ -26,7 +29,7 @@ const handler = async (req,res) =>{
             break;
         case "DELETE":
             try{
-                const order = await Order.FindByIdAndDelete(id)
+                const order = await Order.findByIdAndDelete(id)
                 res.status(200).json(`Order with id ${id} has been deleted successfully!`)
             }catch(err){
                 res.status(500).json(err)
