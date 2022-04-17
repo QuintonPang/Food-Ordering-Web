@@ -1,7 +1,6 @@
 import React from 'react'
 import { FiPhoneCall } from 'react-icons/fi'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
-// import { NavLink } from 'react-router-dom'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 

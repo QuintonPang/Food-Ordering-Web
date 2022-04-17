@@ -116,9 +116,14 @@ const AddPizza = () => {
                         Extras
                         {Array(extraOptionsQuantity).fill().map((_,i)=>
                             <div key={i} className="flex flex-row gap-2 items-center">
-                                <label htmlFor={`extra${i}`}>{i+1}.</label>
-                                <input className="outline w-full"  id={`extra${i}`} type="text" onChange={(e)=>handleExtraOptions(e,i)} />
-                                <input className="outline w-full"  id={`extra${i}`} type="number" onChange={(e)=>handleExtraOptions(e,i)} />
+                                <div className="flex flex-row gap-1 items-center">
+                                    <label htmlFor={`extraName${i}`}>{i+1}.</label>
+                                    <input className="outline w-full"  id={`extraName${i}`} type="text" onChange={(e)=>handleExtraOptions(e,i)} />
+                                </div>
+                                <div className="flex flex-row gap-1 items-center">
+                                    <label htmlFor={`extraPrice${i}`}>$</label>
+                                    <input className="outline w-full"  id={`extraPrice${i}`} type="number" onChange={(e)=>handleExtraOptions(e,i)} />
+                                </div>
                             </div>
                         )}
                         <button className="bg-white text-black border-2 border-black border-solid w-40 self-center" onClick={()=>setExtraOptionsQuantity(extraOptionsQuantity<3?extraOptionsQuantity+1:extraOptionsQuantity)}>Add extra option</button>
