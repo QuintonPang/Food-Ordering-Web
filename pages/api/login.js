@@ -1,10 +1,9 @@
 import cookie from 'cookie'
 
 const handler = (req,res) =>{
-    console.log("dshuifhofhsdif"+process.env.TOKEN)
     switch(req.method){
         case "POST":
-            if(JSON.parse(req.body).username===process.env.ADMIN_USERNAME&&JSON.parse(req.body).password===process.env.ADMIN_PASSWORD){
+            if(req.body.username===process.env.ADMIN_USERNAME&&req.body.password===process.env.ADMIN_PASSWORD){
                 res.setHeader(
                     "Set-Cookie",
                     cookie.serialize("token",process.env.TOKEN, { // name of token and token value
