@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 
-const login = () => {
+const Login = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -51,4 +51,4 @@ const login = () => {
   )
 }
 
-export default login
+export default Login
